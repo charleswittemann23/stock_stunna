@@ -15,3 +15,12 @@
 
 To Do: 
 Setup vercel + heroku conversation, basic homepage, perhaps auth capabilities + login. Database switching depending on local dev or deployment, maybe CI/CD too(tommorrow problem)
+
+07/29 morning: Heroku deployment setup properly, allowed hosts configured, now can setup views, create database schema
+
+
+# Source Material:
+[Insider Sentiment Finnhub](https://finnhub.io/docs/api/insider-sentiment)
+[Hugging Face Finbert](https://huggingface.co/ProsusAI/finbert)
+[Portfolio Optimizer API](https://portfoliooptimizer.io/)
+
