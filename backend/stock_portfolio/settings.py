@@ -3,6 +3,7 @@ from pathlib import Path
 from decouple import config, Csv
 import dj_database_url
 
+
 # Base Directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -14,7 +15,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Allowed Hosts
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost', cast=Csv())
-
+print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
