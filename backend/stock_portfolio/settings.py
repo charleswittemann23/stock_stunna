@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from decouple import config, Csv
 import dj_database_url
-
+from datetime import timedelta
 
 # Base Directory
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders',
 
     'core',
@@ -89,7 +90,19 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     ...
 ]
+#Rest Framework and JWT Auth
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ],
+}
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+    'REFRESH_TOKEN_LIFETIME':timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True
+}
 # Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
