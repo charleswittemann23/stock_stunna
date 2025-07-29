@@ -11,3 +11,7 @@
 - right bar displays quick access to several news sources: hackernews, wall street journal, tldr, also find a way to pull hot topics?? Word on the street, recent hot news section vs. important news. three sections of: first, Important, huge headlines, scrape real time hot news, and pull/have links to my trusted sources.
 - IPO calendar option too?
 -finbert vs finnhub
+
+
+To Do: 
+Setup vercel + heroku conversation, basic homepage, perhaps auth capabilities + login. Database switching depending on local dev or deployment, maybe CI/CD too(tommorrow problem)
