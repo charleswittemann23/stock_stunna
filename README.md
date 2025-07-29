@@ -125,7 +125,9 @@ Day 14: Final Polish
 ✅ Short demo video/gif if showcasing
 
 # Source Material:
-[Insider Sentiment Finnhub](https://finnhub.io/docs/api/insider-sentiment)
+[Insider Sentiment Finnhub](https://finnhub.io/docs/api/insider-sentiment) 
+
 [Hugging Face Finbert](https://huggingface.co/ProsusAI/finbert)
+
 [Portfolio Optimizer API](https://portfoliooptimizer.io/)
 
