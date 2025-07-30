@@ -4,8 +4,9 @@ from django.db import models
 from django.core.validators import RegexValidator
 
 class CustomUser(AbstractUser):
+    #still contains BigAutoField id as primary key
     # Core fields
-    email = models.EmailField(unique=True, db_index=True)  # Added db_index for faster queries
+    email = models.EmailField(unique=True, db_index=True)  # Added db_index for faster queries. Doesn't affect pk, just allows faster lookup, however more storage overhead
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
 
@@ -58,7 +59,6 @@ class CustomUser(AbstractUser):
         verbose_name_plural = 'Users'
         ordering = ['-created_at']
         indexes = [
-            models.Index(fields=['email']),
             models.Index(fields=['created_at']),
         ]
     
