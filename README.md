@@ -17,7 +17,7 @@ To Do:
 Setup vercel + heroku conversation, basic homepage, perhaps auth capabilities + login. Database switching depending on local dev or deployment, maybe CI/CD too(tommorrow problem)..
 7/30
 
-07/29 morning: Heroku deployment setup properly, allowed hosts configured, now can setup views, create database schema
+07/29 morning: Heroku deployment setup properly, allowed hosts configured, now can setup views, create database schema.
 # Possible Roadmap (Changes possible)
 Day 1-2: Project Setup + Auth System
 ✅ Set up your project structure:
@@ -133,3 +133,4 @@ Day 14: Final Polish
 [Portfolio Optimizer API](https://portfoliooptimizer.io/)
 
 # Models: 
+![Schema Desing](backend/staticfiles/extra/drawSQL-image-export-2025-07-30.png)
