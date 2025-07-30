@@ -133,4 +133,4 @@ Day 14: Final Polish
 [Portfolio Optimizer API](https://portfoliooptimizer.io/)
 
 # Models: 
-![Schema Desing](backend/staticfiles/extra/drawSQL-image-export-2025-07-30.png)
+![Schema Desing](local_files/drawSQL-image-export-2025-07-30.png)
