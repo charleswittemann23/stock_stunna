@@ -11,10 +11,11 @@
 - right bar displays quick access to several news sources: hackernews, wall street journal, tldr, also find a way to pull hot topics?? Word on the street, recent hot news section vs. important news. three sections of: first, Important, huge headlines, scrape real time hot news, and pull/have links to my trusted sources.
 - IPO calendar option too?
 -finbert vs finnhub
-
+-charts.js
 
 To Do: 
-Setup vercel + heroku conversation, basic homepage, perhaps auth capabilities + login. Database switching depending on local dev or deployment, maybe CI/CD too(tommorrow problem)
+Setup vercel + heroku conversation, basic homepage, perhaps auth capabilities + login. Database switching depending on local dev or deployment, maybe CI/CD too(tommorrow problem)..
+7/30
 
 07/29 morning: Heroku deployment setup properly, allowed hosts configured, now can setup views, create database schema
 # Possible Roadmap (Changes possible)
@@ -131,3 +132,4 @@ Day 14: Final Polish
 
 [Portfolio Optimizer API](https://portfoliooptimizer.io/)
 
+# Models: 
