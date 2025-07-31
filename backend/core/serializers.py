@@ -2,6 +2,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from email_validator import validate_email, EmailNotValidError
 
 User = get_user_model()
 
@@ -20,7 +21,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         if attrs['password'] != attrs['password_confirm']:
             raise serializers.ValidationError("Passwords don't match")
         return attrs
-
+    def validate_email(self, value):
+        try:
+            validate_email(value, check_deliverability=True)
+        except EmailNotValidError as e:
+            raise serializers.ValidationError(str(e))
+        return value
     def create(self, validated_data):
         validated_data.pop('password_confirm')
         user = User.objects.create_user(**validated_data)
