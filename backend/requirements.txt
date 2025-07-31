@@ -4,7 +4,10 @@ Django==5.2.4
 django-cors-headers==4.7.0
 djangorestframework==3.16.0
 djangorestframework_simplejwt==5.5.1
+dnspython==2.7.0
+email_validator==2.2.0
 gunicorn==23.0.0
+idna==3.10
 packaging==25.0
 psycopg==3.2.9
 psycopg-binary==3.2.9
