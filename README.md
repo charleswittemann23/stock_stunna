@@ -26,6 +26,8 @@ Setup vercel + heroku conversation, basic homepage, perhaps auth capabilities + 
 
 
 07/29 morning: Heroku deployment setup properly, allowed hosts configured, now can setup views, create database schema.
+
+08/05 New updates and roadmap. Created vercel application, now can begin to connect frontend to backend which will probably be pretty tricky. Couples ways I could go this afternoon. Maybe some design stuff in figma, maybe more backend with stocks, api calls, etc, or could build out a basic frontend page to handle initial login.
 # Possible Roadmap (Changes possible)
 Day 1-2: Project Setup + Auth System
 ✅ Set up your project structure:
