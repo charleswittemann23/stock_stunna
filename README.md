@@ -2,7 +2,12 @@
 
 ## [Back End](https://stock-stunna-4cfe4c578d34.herokuapp.com/)
 
-
+#### Minimum Viable Product user stories
+- user should have the ability to make a stock portfolio, 
+- add stocks to their portfolio
+- display charts detailing stock info, plus advanced data on stocks
+- user should be able to see advanced metrics on the entirety of their portfolio
+- user should be able to interact with mostly customized buttons and features that are reminiscent of an older time
 
 ### Personal Project!
 

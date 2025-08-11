@@ -5,5 +5,18 @@ class Stock:
     ticker = models.CharField(max_length=5, validators=[is_valid_ticker]) ## will have to attempt to validate on frontend
     name = models.CharField()
     date_public = models.DateField()
-    exchange = models.CharField()
-    sector = models.CharField() ##can define choices for this?
+    exchange = models.CharField(choices=[
+        ('nyse', 'New York Stock Exchange'),
+        ('s_p_500', 'S & P 500'),
+        ('shanghai', 'Shanghai Stock Exchange'),
+        ('japan', 'Japan Exchange Group'),
+        ('london_innit', 'London Stock Exchange')
+    ])
+    sector = models.CharField(max_length=20,choices=[
+        ('tech', "Technology"),
+        ('health', 'Health'),
+        ('finance', 'Finance'),
+        ('data', 'Data and Information'),
+        ('food_service', 'Food Services'),
+        ('other', 'Miscellaneous')
+    ], default='other') ##can define choices for this?
