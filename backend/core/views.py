@@ -45,7 +45,8 @@ class ProtectedView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        return Response({"message": f"Hello, {request.user.username}. You are authenticated!"})
+        return Response({"message": f"Hello, you are authenticated!"})
+
 class LogoutView(APIView):
     permission_classes=[permissions.IsAuthenticated]
 
