@@ -1,7 +1,7 @@
 from django.db import models
 from .validators import is_valid_ticker
 # Create your models here.
-class Stock:
+class Stock(models.Model):
     ticker = models.CharField(max_length=5, validators=[is_valid_ticker]) ## will have to attempt to validate on frontend
     name = models.CharField()
     date_public = models.DateField()
