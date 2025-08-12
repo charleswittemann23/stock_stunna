@@ -1,47 +1,57 @@
 import axios from "axios";
 
-// Create Axios instance with default config
 const axiosInstance = axios.create({
-  baseURL: "https://stock-stunna-4cfe4c578d34.herokuapp.com/", // your API base URL
-  withCredentials: true, // include cookies for every request
+  baseURL: "https://stock-stunna-4cfe4c578d34.herokuapp.com",
+  withCredentials: true, // send cookies with every request
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Request interceptor (optional, e.g. add auth header if you store token in memory/localStorage)
-axiosInstance.interceptors.request.use(
-  (config) => {
-    // You can attach tokens here if needed, e.g.
-    // const token = localStorage.getItem("access_token");
-    // if (token) config.headers.Authorization = `Bearer ${token}`;
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+let isRefreshing = false;
+let failedQueue = [];
 
-// Response interceptor to handle token refresh on 401
+const processQueue = (error, resolve) => {
+  failedQueue.forEach(prom => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve();
+    }
+  });
+  failedQueue = [];
+};
+
 axiosInstance.interceptors.response.use(
-  (response) => response,
-  async (error) => {
+  response => response,
+  async error => {
     const originalRequest = error.config;
 
-    if (
-      error.response?.status === 401 &&
-      !originalRequest._retry // prevent infinite loop
-    ) {
-      originalRequest._retry = true;
-
-      try {
-        // Attempt to refresh token
-        await axiosInstance.post("/token/refresh/");
-
-        // Retry the original request after refresh
-        return axiosInstance(originalRequest);
-      } catch (refreshError) {
-        // Refresh token failed, logout user or redirect to login page
-        return Promise.reject(refreshError);
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then(() => axiosInstance(originalRequest))
+          .catch(err => Promise.reject(err));
       }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      return new Promise(async (resolve, reject) => {
+        try {
+          await axiosInstance.post("api/auth/token/refresh/"); // no body; relies on cookie
+
+          processQueue(null);
+          resolve(axiosInstance(originalRequest));
+        } catch (err) {
+          processQueue(err);
+          reject(err);
+        } finally {
+          isRefreshing = false;
+        }
+      });
     }
 
     return Promise.reject(error);

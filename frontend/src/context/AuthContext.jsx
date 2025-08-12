@@ -10,8 +10,9 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const res = await axiosInstance.get("/protected/");
+      const res = await axiosInstance.get("api/auth/protected");
       const message = res.data.message;
+      console.log(message)
       const username = message.split(", ")[1].split(".")[0];
       setUser({ username });
       setIsAuthenticated(true);
@@ -23,9 +24,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (username, password) => {
+  const login = async (email, password) => {
     try {
-      await axiosInstance.post("api/auth/token/", { username, password });
+      await axiosInstance.post("api/auth/token/", { email, password }, {withCredentials: true});
       setIsAuthenticated(true);
       await checkAuth();
       return true;
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axiosInstance.post("/logout/");
+      await axiosInstance.post("/api/auth/logout/");
     } catch (err) {
       console.error(err);
     } finally {

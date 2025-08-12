@@ -3,9 +3,11 @@ from .validators import is_valid_ticker
 # Create your models here.
 class Stock(models.Model):
     ticker = models.CharField(max_length=5, validators=[is_valid_ticker]) ## will have to attempt to validate on frontend
-    name = models.CharField()
+    name = models.CharField(max_length=100)
     date_public = models.DateField()
-    exchange = models.CharField(choices=[
+    exchange = models.CharField(
+        max_length=20,
+        choices=[
         ('nyse', 'New York Stock Exchange'),
         ('s_p_500', 'S & P 500'),
         ('shanghai', 'Shanghai Stock Exchange'),
