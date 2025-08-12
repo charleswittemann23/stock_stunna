@@ -16,8 +16,19 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 # Allowed Hosts
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost', cast=Csv())
 print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173", "https://stock-stunna.vercel.app" ## need to UPDATE When frontend fleshed out
+]
+CORS_ALLOW_HEADERS = [
+    "authorization",
+    "content-type",
+    "accept",
+    "origin",
+    "user-agent",
+    "dnt",
+    "cache-control",
+    "x-requested-with",
 ]
 # Application definition
 INSTALLED_APPS = [
@@ -135,7 +146,7 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
-CORS_ALLOW_ALL_ORIGINS = True
+
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 
