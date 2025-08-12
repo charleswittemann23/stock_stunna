@@ -24,3 +24,10 @@ class Stock(models.Model):
     ], default='other')
     def __str__(self):
         return f"{self.name} ({self.ticker})"
+    
+    def clean(self):
+        super().clean()
+        if self.ticker:
+            self.ticker=self.ticker.upper()
+        if self.name:
+            self.name= self.name.title()
