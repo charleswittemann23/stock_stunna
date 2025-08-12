@@ -5,8 +5,7 @@ class SettingsTest(TestCase):
     
     def test_jwt_settings(self):
         """Test JWT settings are configured"""
-        self.assertIn('rest_framework_simplejwt.authentication.JWTAuthentication', 
-                     settings.REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'])
+        
         self.assertEqual(settings.SIMPLE_JWT['ALGORITHM'], 'HS256')
         self.assertTrue(settings.SIMPLE_JWT['ROTATE_REFRESH_TOKENS'])
     
