@@ -8,14 +8,15 @@ from .serializers import RegisterSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from core.serializers import UserSerializer
+
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
 class CookieTokenObtainPairView(TokenObtainPairView):
     def post(self,request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        print(request.data)
-        print(serializer)
+        
         serializer.is_valid(raise_exception=True)
         refresh = serializer.validated_data['refresh']
         access = serializer.validated_data['access']
@@ -45,7 +46,8 @@ class ProtectedView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        return Response({"message": f"Hello, you are authenticated!"})
+        serializer = UserSerializer(request.user)
+        return Response({"user": serializer.data})
 
 class LogoutView(APIView):
     permission_classes=[permissions.IsAuthenticated]
