@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import MyPortfolioButton from './MyPortfolioButton';
-import './Navbar.css';
+import './NavBar.css';
 
 // Main Navbar Component with React Router Integration
 export default function Navbar() {
