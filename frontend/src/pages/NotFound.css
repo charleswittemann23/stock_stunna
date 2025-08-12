@@ -1,0 +1,126 @@
+.error-page {
+          min-height: 100vh;
+          background-color: #f5f3ee;
+          font-family: 'Handjet', monospace;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 2rem;
+        }
+
+        .error-content {
+          max-width: 800px;
+          width: 100%;
+          text-align: center;
+        }
+
+        .error-display {
+          background-color: #d3d3d3;
+          border: 4px solid #333;
+          box-shadow: 8px 8px 0 #666;
+          padding: 3rem;
+          margin-bottom: 2rem;
+        }
+
+        .error-title {
+          font-size: 2.5rem;
+          color: #333;
+          text-shadow: 3px 3px 0 #666;
+          margin-bottom: 1rem;
+          font-weight: bold;
+        }
+
+        .error-code {
+          font-size: 6rem;
+          color: #d8a7b1;
+          text-shadow: 4px 4px 0 #333;
+          margin: 1rem 0;
+          font-weight: bold;
+          line-height: 1;
+        }
+
+        .error-message {
+          font-size: 1.5rem;
+          color: #333;
+          margin-bottom: 1.5rem;
+          font-weight: bold;
+        }
+
+        .error-details {
+          background-color: #f5f3ee;
+          border: 3px solid #333;
+          box-shadow: inset 2px 2px 0 #666;
+          padding: 1.5rem;
+          margin: 2rem 0;
+        }
+
+        .error-details p {
+          margin: 0;
+          color: #666;
+          font-size: 1rem;
+        }
+
+        .error-actions {
+          display: flex;
+          gap: 1rem;
+          justify-content: center;
+          flex-wrap: wrap;
+          margin-top: 2rem;
+        }
+
+        .retro-button {
+          background-color: #a2c2dd;
+          border: 4px solid #333;
+          box-shadow: 4px 4px 0 #666;
+          padding: 1rem 2rem;
+          
+          font-weight: bold;
+          text-transform: uppercase;
+          text-decoration: none;
+          color: #333;
+          cursor: pointer;
+          transition: all 0.1s ease;
+          display: inline-block;
+        }
+
+        .retro-button.secondary {
+          background-color: #bfd8bd;
+        }
+
+        .retro-button:hover {
+          transform: translate(2px, 2px);
+          box-shadow: 2px 2px 0 #666;
+        }
+
+        
+
+        @media (max-width: 768px) {
+          .error-page {
+            padding: 1rem;
+          }
+
+          .error-display {
+            padding: 2rem 1rem;
+          }
+
+          .error-title {
+            font-size: 2rem;
+          }
+
+          .error-code {
+            font-size: 4rem;
+          }
+
+          .error-message {
+            font-size: 1.2rem;
+          }
+
+          .error-actions {
+            flex-direction: column;
+          }
+
+          .error-ascii {
+            font-size: 0.6rem;
+            padding: 1rem;
+          }
+        }

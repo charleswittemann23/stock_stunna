@@ -33,7 +33,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="retro-body">
+    
       <nav className="retro-navbar">
         <div className="nav-container">
           <MyPortfolioButton />
@@ -76,6 +76,6 @@ export default function Navbar() {
           </div>
         )}
       </nav>
-    </div>
+    
   );
 }

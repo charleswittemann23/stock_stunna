@@ -1,0 +1,37 @@
+.retro-body {
+  margin: 0;
+  padding: 0;
+  font-family: 'HandJet', 'Courier New', monospace;
+  background-color: #F5F3EE;
+  min-height: 100vh;
+  background-image: 
+    radial-gradient(circle at 25% 25%, #E8E6E1 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, #E0DDD8 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.pixel-box {
+  aspect-ratio: 1;
+  border: 2px solid #999;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #2C3E50;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  text-align: center;
+}
+
+.pixel-box:hover {
+  transform: translate(2px, 2px);
+  box-shadow: inset 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+/* Color classes for pixel boxes */
+.color-a2c2dd { background-color: #A2C2DD; }
+.color-d8a7b1 { background-color: #D8A7B1; }
+.color-bfd8bd { background-color: #BFD8BD; }
+.color-d3d3d3 { background-color: #D3D3D3; }
+.color-f5f3ee { background-color: #F5F3EE; }

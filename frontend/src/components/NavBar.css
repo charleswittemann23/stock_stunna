@@ -2,17 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=HandJet:wght@400;700&display=swap');
 
 /* Base styles */
-.retro-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'HandJet', 'Courier New', monospace;
-  background-color: #F5F3EE;
-  min-height: 100vh;
-  background-image: 
-    radial-gradient(circle at 25% 25%, #E8E6E1 1px, transparent 1px),
-    radial-gradient(circle at 75% 75%, #E0DDD8 1px, transparent 1px);
-  background-size: 20px 20px;
-}
+
 
 /* Navbar styles */
 .retro-navbar {

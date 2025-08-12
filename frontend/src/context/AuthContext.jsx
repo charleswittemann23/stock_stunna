@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import axiosInstance from "../axios";
+import { redirect } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -29,6 +30,7 @@ export const AuthProvider = ({ children }) => {
       await axiosInstance.post("api/auth/token/", { email, password }, {withCredentials: true});
       setIsAuthenticated(true);
       await checkAuth();
+      redirect()
       return true;
     } catch (err) {
       return false;

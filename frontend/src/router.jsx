@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage'
 import PrivateRoute from "./components/PrivateRoute";
 import PortfolioPage from "./pages/PortfolioPage";
 import LoginPage from "./pages/LoginPage";
+import NotFound from "./pages/NotFound"
 
 const router = createBrowserRouter([
     {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
                 ),
             },
         ],
+        errorElement: <NotFound />
     },
 ]);
 
