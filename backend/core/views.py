@@ -15,6 +15,7 @@ class CookieTokenObtainPairView(TokenObtainPairView):
     def post(self,request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         print(request.data)
+        print(serializer)
         serializer.is_valid(raise_exception=True)
         refresh = serializer.validated_data['refresh']
         access = serializer.validated_data['access']
