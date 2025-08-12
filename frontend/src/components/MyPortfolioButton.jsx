@@ -9,20 +9,20 @@ export default function MyPortfolioButton() {
 
   return (
     <button
-      className="flex items-center gap-2 px-4 py-2 rounded-md border border-black bg-[#A2C2DD] shadow-md transition-all duration-300"
-       style={{
-        backgroundColor: '#A2C2DD',
-        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.25)',
-      }}
+      className={`portfolio-btn ${hovered ? 'hovered' : ''}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <img
+      <div className={`portfolio-icon ${hovered ? 'hovered' : ''}`}>
+         <img
         src={hovered ? openfolder : folder}
         alt="Button Icon"
-        className="w-1 h-1 transition-all duration-300"
+        className="portfolio-icon-image"
+
       />
-      <span className="text-base ">My Portfolio</span>
+      
+      </div>
+      <span>My Portfolio</span>
     </button>
   );
 }

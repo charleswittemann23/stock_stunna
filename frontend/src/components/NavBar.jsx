@@ -1,39 +1,81 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import MyPortfolioButton from "./MyPortfolioButton";
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import MyPortfolioButton from './MyPortfolioButton';
+import './Navbar.css';
 
-export default function NavBar() {
+// Main Navbar Component with React Router Integration
+export default function Navbar() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  // Define navigation items with their routes matching your router
+  const navItems = [
+    { id: 'home', label: 'Home', path: '/' },
+    { id: 'portfolio', label: 'My Portfolio', path: '/portfolio' },
+    { id: 'stocks', label: 'Browse Stocks', path: '/stocks' }, // You'll need to add this route
+    { id: 'about', label: 'About', path: '/about' }, // You'll need to add this route
+    { id: 'login', label: 'Login', path: '/login' }
+  ];
+
+  // Function to check if a route is active
+  const isActiveRoute = (path) => {
+    if (path === '/' && location.pathname === '/') {
+      return true;
+    }
+    if (path !== '/' && location.pathname.startsWith(path)) {
+      return true;
+    }
+    return false;
+  };
+
+  const handleMobileMenuClick = () => {
+    setMobileMenuOpen(false);
+  };
+
   return (
-    <nav
-      className="w-full bg-gradient-to-r from-blue-400 to-blue-600 shadow-lg"
-      aria-label="Primary Navigation"
-    >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-10 py-4">
-        {/* Logo / Brand */}
-        <Link
-          to="/"
-          className=" text-3xl font-extrabold tracking-wide hover:text-gray-200 transition-colors duration-300"
-        >
-          My App
-        </Link>
+    <div className="retro-body">
+      <nav className="retro-navbar">
+        <div className="nav-container">
+          <MyPortfolioButton />
+          
+          <ul className={`nav-menu ${mobileMenuOpen ? 'mobile-hidden' : ''}`}>
+            {navItems.map((item) => (
+              <li key={item.id} className="nav-item">
+                <Link
+                  to={item.path}
+                  className={`nav-link nav-link-${item.id} ${isActiveRoute(item.path) ? 'active' : ''}`}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
 
-        <div className="flex items-center gap-6">
-          <Link
-            to="/portfolio"
-            className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 rounded-md"
-            aria-label="Go to My Portfolio"
+          <div
+            className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            <MyPortfolioButton />
-          </Link>
-
-          <Link
-            to="/login"
-            className="px-5 py-2 rounded-md border border-black bg-[#A2C2DD] shadow-md text-base font-semibold text-black transition-transform duration-300 hover:bg-[#89a7c9] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300"
-          >
-            Login
-          </Link>
+            <div className="hamburger-line"></div>
+            <div className="hamburger-line"></div>
+            <div className="hamburger-line"></div>
+          </div>
         </div>
-      </div>
-    </nav>
+
+        {mobileMenuOpen && (
+          <div className="mobile-menu">
+            {navItems.map((item) => (
+              <Link
+                key={item.id}
+                to={item.path}
+                className={`mobile-nav-link nav-link-${item.id} ${isActiveRoute(item.path) ? 'active' : ''}`}
+                onClick={handleMobileMenuClick}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        )}
+      </nav>
+    </div>
   );
 }

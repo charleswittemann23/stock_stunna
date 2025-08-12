@@ -21,6 +21,6 @@ class Stock(models.Model):
         ('data', 'Data and Information'),
         ('food_service', 'Food Services'),
         ('other', 'Miscellaneous')
-    ], default='other') ##can define choices for this?
+    ], default='other')
     def __str__(self):
-        return f"{self.ticker}: {self.name}"
+        return f"{self.name} ({self.ticker})"

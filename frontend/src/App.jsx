@@ -12,7 +12,7 @@ function App() {
       <NavBar/>
 
       <Outlet />
-      <footer>Hello!</footer>
+      <footer>This is a footer!</footer>
     </div>
         
     </>
