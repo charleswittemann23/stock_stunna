@@ -22,3 +22,5 @@ class Stock(models.Model):
         ('food_service', 'Food Services'),
         ('other', 'Miscellaneous')
     ], default='other') ##can define choices for this?
+    def __str__(self):
+        return f"{self.ticker}: {self.name}"
