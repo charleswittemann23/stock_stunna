@@ -117,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 #Rest Framework and JWT Auth
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'core.authentication.CookieJWTAuthentication'
+        'core.authentication.CookieJWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
