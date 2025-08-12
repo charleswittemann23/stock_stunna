@@ -22,8 +22,8 @@ class CookieTokenObtainPairView(TokenObtainPairView):
 
         response = Response({"message ": "Login successful"}, status=status.HTTP_200_OK)
 
-        response.set_cookie("access_token", str(access), httponly=True, samesite="None")
-        response.set_cookie("refresh_token", str(refresh), httponly=True, samesite="None")
+        response.set_cookie("access_token", str(access), httponly=True, samesite="None", secure=True)
+        response.set_cookie("refresh_token", str(refresh), httponly=True, samesite="None", secure=True)
 
         return response
 class CookieTokenRefreshView(TokenRefreshView):
@@ -39,7 +39,7 @@ class CookieTokenRefreshView(TokenRefreshView):
 
 
         response = Response({"message": "Token refreshed"}, status=status.HTTP_200_OK)
-        response.set_cookie("access_token", str(access), httponly=True, samesite="None")
+        response.set_cookie("access_token", str(access), httponly=True, samesite="None", secure=True)
         return response
 class ProtectedView(APIView):
     permission_classes = [permissions.IsAuthenticated]
