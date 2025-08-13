@@ -1,23 +1,25 @@
-from django.shortcuts import render
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
+import yfinance as yf
 
 
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def portfolio_view(request):
-    user = request.user
-    # Replace this with actual portfolio data retrieval logic
-    portfolio_data = {
-        "message": f"Welcome, {user.get_full_name()}.",
-        "portfolio": {
-            "stocks": [
-                {"symbol": "AAPL", "shares": 10},
-                {"symbol": "TSLA", "shares": 5},
-            ],
-            "total_value": 15000
+class HomePageView(APIView):
+    permission_classes = [AllowAny]
+    
+    def get(self,request):
+        US = yf.Market(market="US")
+        print(US.status)
+        ##probably good to parse this info, only send response of stuff we need
+        us_market_summary = US.summary
+        portfolio_data = {
+            "portfolio": {
+                "stocks": [
+                    {"symbol": "AAPL", "shares": 10},
+                    {"symbol": "TSLA", "shares": 5},
+                ],
+                "total_value": 15000
+            }
         }
-    }
-    return Response(portfolio_data)
+        return Response(US.summary)
