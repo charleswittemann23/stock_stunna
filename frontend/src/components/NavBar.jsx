@@ -1,81 +1,106 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import MyPortfolioButton from './MyPortfolioButton';
+import NavItem from './NavItem';
 import './NavBar.css';
+import { AuthContext } from '../context/AuthContext';
+import {PAGE_ICONS} from '../assets/icons';
 
-// Main Navbar Component with React Router Integration
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { isAuthenticated, logout } = useContext(AuthContext);
 
-  // Define navigation items with their routes matching your router
-  const navItems = [
-    { id: 'home', label: 'Home', path: '/' },
-    { id: 'portfolio', label: 'My Portfolio', path: '/portfolio' },
-    { id: 'stocks', label: 'Browse Stocks', path: '/stocks' }, // You'll need to add this route
-    { id: 'about', label: 'About', path: '/about' }, // You'll need to add this route
-    { id: 'login', label: 'Login', path: '/login' }
-  ];
+  // Memoize navigation items to prevent unnecessary re-renders
+  const navItemsLeft = useMemo(() => [
+    { id: 'home', label: 'Home', path: '/', icon: PAGE_ICONS.GLOBE_ICON },
+    { id: 'portfolio', label: 'My Portfolio', path: '/portfolio', icon: PAGE_ICONS.FOLDER_ICON },
+    { id: 'stocks', label: 'Browse Stocks', path: '/stocks', icon: PAGE_ICONS.PAPER_ICON },
+  ], []);
 
-  // Function to check if a route is active
+  const navItemsRight = useMemo(() => [
+    { id: 'profile', label: 'My Profile', path: '/my_profile', icon: PAGE_ICONS.PROFILE_ICON },
+    isAuthenticated
+      ? { id: 'logout', label: 'Logout', path: '#', icon: PAGE_ICONS.LOGOUT_ICON, action: logout }
+      : { id: 'login', label: 'Login', path: '/login', icon: PAGE_ICONS.LOGIN_ICON }
+  ], [isAuthenticated, logout]);
+
+  // Check if a route is active
   const isActiveRoute = (path) => {
-    if (path === '/' && location.pathname === '/') {
-      return true;
-    }
-    if (path !== '/' && location.pathname.startsWith(path)) {
-      return true;
-    }
-    return false;
+    return path === '/' 
+      ? location.pathname === '/'
+      : location.pathname.startsWith(path);
   };
 
-  const handleMobileMenuClick = () => {
-    setMobileMenuOpen(false);
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+
+  const handleMobileNavClick = (item) => {
+    if (item.action) {
+      item.action();
+    }
+    closeMobileMenu();
   };
 
   return (
-    
-      <nav className="retro-navbar">
-        <div className="nav-container">
-          <MyPortfolioButton />
+    <nav className="retro-navbar">
+      <div className="nav-container">
+        {/* Left navigation items */}
+        <ul className={`nav-menu nav-menu-left ${mobileMenuOpen ? 'mobile-hidden' : ''}`}>
           
-          <ul className={`nav-menu ${mobileMenuOpen ? 'mobile-hidden' : ''}`}>
-            {navItems.map((item) => (
-              <li key={item.id} className="nav-item">
-                <Link
-                  to={item.path}
-                  className={`nav-link nav-link-${item.id} ${isActiveRoute(item.path) ? 'active' : ''}`}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {navItemsLeft.map((item) => (
+            <NavItem
+              key={item.id}
+              label={item.label}
+              path={item.path}
+              icon={item.icon}
+              isActive={isActiveRoute(item.path)}
+            />
+          ))}
+        </ul>
+          <h1 className="retro-title">Stock Stunna</h1>
+        {/* Right navigation items */}
+        <ul className={`nav-menu nav-menu-right ${mobileMenuOpen ? 'mobile-hidden' : ''}`}>
+          {navItemsRight.map((item) => (
+            <NavItem
+              key={item.id}
+              label={item.label}
+              path={item.path}
+              icon={item.icon}
+              isActive={isActiveRoute(item.path)}
+              action={item.action}
+            />
+          ))}
+        </ul>
 
-          <div
-            className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            <div className="hamburger-line"></div>
-            <div className="hamburger-line"></div>
-            <div className="hamburger-line"></div>
-          </div>
+        {/* Hamburger menu button */}
+        <button
+          className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle mobile menu"
+          aria-expanded={mobileMenuOpen}
+        >
+          <div className="hamburger-line" />
+          <div className="hamburger-line" />
+          <div className="hamburger-line" />
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      {mobileMenuOpen && (
+        <div className="mobile-menu">
+          {[...navItemsLeft, ...navItemsRight].map((item) => (
+            <Link
+              key={item.id}
+              to={item.path}
+              className={`mobile-nav-link nav-link-${item.id} ${
+                isActiveRoute(item.path) ? 'active' : ''
+              }`}
+              onClick={() => handleMobileNavClick(item)}
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
-
-        {mobileMenuOpen && (
-          <div className="mobile-menu">
-            {navItems.map((item) => (
-              <Link
-                key={item.id}
-                to={item.path}
-                className={`mobile-nav-link nav-link-${item.id} ${isActiveRoute(item.path) ? 'active' : ''}`}
-                onClick={handleMobileMenuClick}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        )}
-      </nav>
-    
+      )}
+    </nav>
   );
 }

@@ -1,0 +1,10 @@
+.about-container {
+  background-color: #D3D3D3;       /* matches nav buttons' default color */
+  box-shadow: 2px 2px 0px #8B9CB3, 4px 4px 0px #6B7C93; /* retro button shadow */
+  font-family: 'HandJet', 'Courier New', monospace;   /* same as nav */
+  color: #2C3E50;
+  line-height: 1.6;
+  margin: 2rem auto;                /* centers the section */
+  text-transform: uppercase;        /* optional, matches nav style */
+  letter-spacing: 1px;
+}

@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import './components/MyPortfolioButton'
 import NavBar from './components/NavBar.jsx'
 import {Outlet} from 'react-router-dom'
 import './App.css'
+import NewsSection from './components/NewsSection.jsx'
+import About from './components/AboutPage.jsx'
 
 function App() {
   return (
@@ -13,7 +14,10 @@ function App() {
       
       <Outlet />
       
-      <footer>This is a footer!</footer>
+
+      <NewsSection />
+      <About/>
+      
     </div>
     
     </>

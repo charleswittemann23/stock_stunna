@@ -6,7 +6,7 @@ export default function PortfolioPage(){
     return (
         <>
         
-        <p>Hello!</p>
+        <p>Welcome to your portfolio page!</p>
         </>
     )
 }

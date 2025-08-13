@@ -1,13 +1,28 @@
+import { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import './HomePage.css'
+
 export default function HomePage(){
+  const { login, isAuthenticated, user, refreshAuth } = useContext(AuthContext);
+  isAuthenticated ? console.log(user) : console.log("No user is logged in")
+    const navigate = useNavigate();
     return (
     <div className="retro-content">
-      <h1 className="retro-title">Stock Stunna</h1>
+      
+      <h2>
+            {isAuthenticated ? 
+            (<>Hello {user.username}! Welcome to your stock portfolio hub!</>) : (<>Please sign in to access full features</>)}
+          </h2>
       <div className="content-card">
         <p>This is your home for all stock financial data and complex analysis. Welcome to my retro pixel-style portfolio!</p>
+        
+          
+        
         <div className="pixel-grid">
-          <div className="pixel-box color-a2c2dd">Create Portfolios</div>
-          <div className="pixel-box color-d8a7b1">See industry standard analysis on your portfolio</div>
-          <div className="pixel-box color-bfd8bd">Get insight into insider sentiment for companies</div>
+          <div className="pixel-box color-a2c2dd">Series of data points, percentages from US market, Europe</div>
+          <div className="pixel-box color-d8a7b1">Chart 2</div>
+          <div className="pixel-box color-bfd8bd">Chart 3</div>
         </div>
       </div>
     </div>

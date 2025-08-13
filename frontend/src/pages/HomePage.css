@@ -1,0 +1,27 @@
+.pixel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust minmax as needed */
+  gap: 10px; /* Adjust gap as needed */
+  margin-top: 20px;
+}
+
+.pixel-box {
+  padding: 15px;
+  text-align: center;
+  border: 2px solid #D3D3D3;
+  box-shadow: 2px 2px 0px #BDBDBD;
+  font-family: 'HandJet', 'Courier New', monospace;
+  font-size: 16px;
+  color: #2C3E50;
+  transition: background-color 0.3s ease;
+}
+
+.pixel-box:hover {
+  background-color: #D3D3D3;
+  cursor: pointer;
+}
+
+/* Color classes for pixel boxes */
+.color-a2c2dd { background-color: #A2C2DD; }
+.color-d8a7b1 { background-color: #D8A7B1; }
+.color-bfd8bd { background-color: #BFD8BD; }

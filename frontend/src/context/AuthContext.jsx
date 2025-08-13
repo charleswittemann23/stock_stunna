@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
 import axiosInstance from "../axios";
-import { redirect } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -12,12 +11,22 @@ export const AuthProvider = ({ children }) => {
   const checkAuth = async () => {
     try {
       const res = await axiosInstance.get("api/auth/protected");
-      const message = res.data.message;
-      console.log(message)
-      const username = message.split(", ")[1].split(".")[0];
-      setUser({ username });
-      setIsAuthenticated(true);
+      //console.log(res)
+      // Handle different possible response formats
+      let username = null;
+      
+      if (res.data.user?.username) {
+        username = res.data.user.username;
+      } 
+      
+      if (username) {
+        setUser({ username });
+        setIsAuthenticated(true);
+      } else {
+        throw new Error("No user identifier found in response");
+      }
     } catch (err) {
+      console.error("Authentication check failed:", err.response?.data || err.message);
       setIsAuthenticated(false);
       setUser(null);
     } finally {
@@ -27,21 +36,32 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      await axiosInstance.post("api/auth/token/", { email, password }, {withCredentials: true});
-      setIsAuthenticated(true);
+      setIsAuthenticated(false);
+      setUser(null);
+      
+      await axiosInstance.post("api/auth/token/", 
+        { email, password }, 
+        { withCredentials: true }
+      );
+      
+      // Small delay to ensure cookies are set
+      await new Promise(resolve => setTimeout(resolve, 100));
       await checkAuth();
-      redirect()
+      
       return true;
     } catch (err) {
+      console.error("Login failed:", err.response?.data || err.message);
+      setIsAuthenticated(false);
+      setUser(null);
       return false;
     }
   };
 
   const logout = async () => {
     try {
-      await axiosInstance.post("/api/auth/logout/");
+      await axiosInstance.post("/api/auth/logout/", {}, { withCredentials: true });
     } catch (err) {
-      console.error(err);
+      console.error("Logout failed:", err.response?.data || err.message);
     } finally {
       setUser(null);
       setIsAuthenticated(false);
@@ -52,10 +72,17 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
+  const value = {
+    user,
+    isAuthenticated,
+    loading,
+    login,
+    logout,
+    checkAuth
+  };
+
   return (
-    <AuthContext.Provider
-      value={{ user, isAuthenticated, login, logout, loading }}
-    >
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
