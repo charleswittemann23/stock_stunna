@@ -68,13 +68,12 @@ class LogoutView(APIView):
             "access_token", 
             path="/",           # Match the path
             samesite="None",    # Match your login view
-            secure=True         # Match your login view
         )
         response.delete_cookie(
             "refresh_token", 
             path="/", 
             samesite="None", 
-            secure=True
+            
         )
         return response
        
