@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [hasLoggedOut, setHasLoggedOut] = useState(false);
 
   const checkAuth = async () => {
     try {
@@ -65,12 +66,18 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setUser(null);
       setIsAuthenticated(false);
+      setHasLoggedOut(true)
     }
   };
 
   useEffect(() => {
-    checkAuth();
-  }, []);
+    // Only check auth if user hasn't explicitly logged out
+    if (!hasLoggedOut) {
+      checkAuth();
+    } else {
+      setLoading(false); // Stop loading if logged out
+    }
+  }, [hasLoggedOut]); 
 
   const value = {
     user,
