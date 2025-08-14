@@ -1,4 +1,4 @@
-# Create your views here.
+import logging
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -47,25 +47,25 @@ class ProtectedView(APIView):
         serializer = UserSerializer(request.user)
         return Response({"user": serializer.data})
 
+logger = logging.getLogger(__name__)
+
 class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
         refresh_token = request.COOKIES.get("refresh_token")
-        print(refresh_token)
+
         if refresh_token:
             try:
                 token = RefreshToken(refresh_token)
-                token.blacklist()  # Only works if blacklist app is enabled. Make sure jwt_blacklist is in installed apps
-            except TokenError:
-                # Token invalid/expired — just ignore
-                pass
-            except AttributeError:
-                # Blacklist not enabled — also fine to ignore
-                pass
-        
+                token.blacklist()
+            except (TokenError, AttributeError) as e:
+                logger.error(f"Logout token error: {e}")
+            except Exception as e:
+                logger.error(f"Unexpected logout error: {e}")
+
         response = Response(status=status.HTTP_205_RESET_CONTENT)
-        cookie_settings = dict(samesite="None", secure=True) ## DRY workaround
+        cookie_settings = dict(samesite="None", secure=True)
         response.delete_cookie("access_token", **cookie_settings)
         response.delete_cookie("refresh_token", **cookie_settings)
         return response
