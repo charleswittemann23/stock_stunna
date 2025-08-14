@@ -52,7 +52,7 @@ class LogoutView(APIView):
 
     def post(self, request):
         refresh_token = request.COOKIES.get("refresh_token")
-
+        print(refresh_token)
         if refresh_token:
             try:
                 token = RefreshToken(refresh_token)
@@ -63,8 +63,9 @@ class LogoutView(APIView):
             except AttributeError:
                 # Blacklist not enabled — also fine to ignore
                 pass
-
+        
         response = Response(status=status.HTTP_205_RESET_CONTENT)
-        response.delete_cookie("access_token", samesite="None",secure=True) ##need exact same flags
-        response.delete_cookie("refresh_token", samesite="None", secure=True)
+        cookie_settings = dict(samesite="None", secure=True) ## DRY workaround
+        response.delete_cookie("access_token", **cookie_settings)
+        response.delete_cookie("refresh_token", **cookie_settings)
         return response
