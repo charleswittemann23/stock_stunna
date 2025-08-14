@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import NotFound from "./pages/NotFound"
 import ProfilePage from "./pages/ProfilePage"
 import StockPage from "./pages/StockPage"
+import RegisterPage from "./pages/RegisterPage";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: "login", element: <LoginPage /> },
+      {path: "register", element: <RegisterPage />},
       { path: "stocks", element: <StockPage />},
 
       // Grouped private routes

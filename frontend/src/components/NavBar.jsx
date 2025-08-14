@@ -27,7 +27,8 @@ export default function Navbar() {
         { id: 'logout', label: 'Logout', path: '#', icon: PAGE_ICONS.LOGOUT_ICON, action: logout }
       ]
     : [
-        { id: 'login', label: 'Login', path: '/login', icon: PAGE_ICONS.LOGIN_ICON }
+        { id: 'login', label: 'Login', path: '/login', icon: PAGE_ICONS.LOGIN_ICON },
+        { id: 'register', label:'Register', path: '/register', icon: PAGE_ICONS.KEYS_ICON}
       ]
   )
 ], [isAuthenticated, logout]);

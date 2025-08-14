@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-
+import './LoginPage.css'
 export default function LoginPage() {
     const { login, isAuthenticated } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -40,14 +40,13 @@ export default function LoginPage() {
         setError("");
 
         try {
-            const success = await login(formData.email.trim(), formData.password);
-            
-            if (!success) {
-                setError("Invalid credentials. Please try again.");
+            const result = await login(formData.email.trim(), formData.password);
+            if (!result.success) {
+                setError(result.error || "Invalid credentials. Please try again.");
             }
-            // Navigation is handled by the useEffect when isAuthenticated becomes true
         } catch (err) {
-            setError("Login failed. Please try again.");
+            console.error("Unexpected error in handleSubmit:", err);
+            setError("An unexpected error occurred. Please try again.");
         } finally {
             setIsLoading(false);
         }

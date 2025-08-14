@@ -27,6 +27,11 @@ axiosInstance.interceptors.response.use(
   async error => {
     const originalRequest = error.config;
 
+    // DON'T try to refresh tokens for login or refresh endpoints
+    if (originalRequest.url?.includes('/token/') || originalRequest.url?.includes('/refresh/')) {
+      return Promise.reject(error);
+    }
+
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
@@ -41,7 +46,7 @@ axiosInstance.interceptors.response.use(
 
       return new Promise(async (resolve, reject) => {
         try {
-          await axiosInstance.post("api/auth/token/refresh/"); // no body; relies on cookie
+          await axiosInstance.post("api/auth/token/refresh/");
 
           processQueue(null);
           resolve(axiosInstance(originalRequest));

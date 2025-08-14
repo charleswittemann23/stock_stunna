@@ -8,7 +8,8 @@
 - display charts detailing stock info, plus advanced data on stocks
 - user should be able to see advanced metrics on the entirety of their portfolio
 - user should be able to interact with mostly customized buttons and features that are reminiscent of an older time
-
+### User Info
+- user: cw2, email:bob@yahoo.com, ps: FreakNasty
 ### Personal Project!
 
 - feels huge in scope

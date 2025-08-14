@@ -64,6 +64,8 @@ class LogoutView(APIView):
 
         # Delete cookies (no need to pass samesite/secure unless you set them explicitly on creation)
         response = Response(status=status.HTTP_205_RESET_CONTENT)
+
+        ##reminder: delete cookies wants you to be explicit as possible, however don't need to include secure again
         response.delete_cookie(
             "access_token", 
             path="/",           # Match the path

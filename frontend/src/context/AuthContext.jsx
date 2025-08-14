@@ -34,29 +34,70 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     }
   };
-
-  const login = async (email, password) => {
-    try {
-      setIsAuthenticated(false);
-      setUser(null);
-      
-      await axiosInstance.post("api/auth/token/", 
-        { email, password }, 
-        { withCredentials: true }
-      );
-      
-      // Small delay to ensure cookies are set
+  const register = async (registrationData) => {
+  try {
+    const response = await axiosInstance.post("api/auth/register/", registrationData);
+    console.log(response)
+    if (response.status === 201) {
+      login(registrationData.email, registrationData.password)
+      await checkAuth();
+      return { success: true };
+    }
+    
+    return { success: false, error: "Registration failed" };
+    
+  } catch (err) {
+    console.error("Registration failed:", err.response?.data || err.message);
+    
+    const errorMessage = err.response?.data?.email?.[0] ||
+                        err.response?.data?.username?.[0] || 
+                        err.response?.data?.password?.[0] ||
+                        err.response?.data?.detail ||
+                        "Registration failed";
+    
+    return { 
+      success: false, 
+      error: errorMessage,
+      status: err.response?.status 
+    };
+  }
+};
+ const login = async (email, password) => {
+  try {
+    setIsAuthenticated(false);
+    setUser(null);
+    
+    const response = await axiosInstance.post("api/auth/token/", 
+      { email, password }, 
+      { withCredentials: true }
+    );
+    
+    if (response.status === 200) {
       await new Promise(resolve => setTimeout(resolve, 100));
       await checkAuth();
-      
-      return true;
-    } catch (err) {
-      console.error("Login failed:", err.response?.data || err.message);
-      setIsAuthenticated(false);
-      setUser(null);
-      return false;
+      return { success: true };
     }
-  };
+    
+    return { success: false, error: "Login failed" };
+    
+  } catch (err) {
+    
+    console.error("Login failed:", err.response?.data || err.message);
+    setIsAuthenticated(false);
+    setUser(null);
+    
+    const errorMessage = err.response?.data?.detail || 
+                        err.response?.data?.message || 
+                        err.response?.data?.non_field_errors?.[0] ||
+                        "Login failed";
+    
+    return { 
+      success: false, 
+      error: errorMessage,
+      status: err.response?.status 
+    };
+  }
+};
 
   const logout = async () => {
     try {
@@ -84,6 +125,7 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated,
     loading,
     login,
+    register,
     logout,
     checkAuth
   };
