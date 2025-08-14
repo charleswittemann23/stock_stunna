@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 # Create your views here.
 from rest_framework import generics, permissions
 from rest_framework.response import Response
@@ -58,7 +56,7 @@ class LogoutView(APIView):
         if refresh_token:
             try:
                 token = RefreshToken(refresh_token)
-                token.blacklist()  # Only works if blacklist app is enabled
+                token.blacklist()  # Only works if blacklist app is enabled. Make sure jwt_blacklist is in installed apps
             except TokenError:
                 # Token invalid/expired — just ignore
                 pass
@@ -67,6 +65,6 @@ class LogoutView(APIView):
                 pass
 
         response = Response(status=status.HTTP_205_RESET_CONTENT)
-        response.delete_cookie("access_token")
-        response.delete_cookie("refresh_token")
+        response.delete_cookie("access_token", samesite="None",secure=True) ##need exact same flags
+        response.delete_cookie("refresh_token", samesite="None", secure=True)
         return response
