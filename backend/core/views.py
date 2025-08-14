@@ -5,7 +5,7 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import RegisterSerializer
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from core.serializers import UserSerializer
@@ -50,15 +50,23 @@ class ProtectedView(APIView):
         return Response({"user": serializer.data})
 
 class LogoutView(APIView):
-    permission_classes=[permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
-    def post(self,request):
+    def post(self, request):
         refresh_token = request.COOKIES.get("refresh_token")
-        if refresh_token:
-            token = RefreshToken(refresh_token)
-            token.blacklist()
 
-        response = Response(status = status.HTTP_205_RESET_CONTENT)
+        if refresh_token:
+            try:
+                token = RefreshToken(refresh_token)
+                token.blacklist()  # Only works if blacklist app is enabled
+            except TokenError:
+                # Token invalid/expired — just ignore
+                pass
+            except AttributeError:
+                # Blacklist not enabled — also fine to ignore
+                pass
+
+        response = Response(status=status.HTTP_205_RESET_CONTENT)
         response.delete_cookie("access_token")
         response.delete_cookie("refresh_token")
         return response
