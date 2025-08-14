@@ -59,13 +59,20 @@ class LogoutView(APIView):
             try:
                 token = RefreshToken(refresh_token)
                 token.blacklist()
-            except (TokenError, AttributeError) as e:
-                logger.error(f"Logout token error: {e}")
+            except TokenError as e:
+                # Ignore if already blacklisted
+                if "blacklisted" in str(e).lower():
+                    logger.info("Refresh token was already blacklisted — ignoring.")
+                else:
+                    logger.error(f"Logout token error: {e}")
+            except AttributeError:
+                logger.warning("Token blacklist not enabled in settings.")
             except Exception as e:
                 logger.error(f"Unexpected logout error: {e}")
 
-        response = Response(status=status.HTTP_205_RESET_CONTENT)
+        # Clear cookies whether token was valid or not
         cookie_settings = dict(samesite="None", secure=True)
+        response = Response(status=status.HTTP_205_RESET_CONTENT)
         response.delete_cookie("access_token", **cookie_settings)
         response.delete_cookie("refresh_token", **cookie_settings)
         return response
