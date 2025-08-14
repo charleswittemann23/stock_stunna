@@ -11,18 +11,26 @@ export default function Navbar() {
   const { isAuthenticated, logout } = useContext(AuthContext);
 
   // Memoize navigation items to prevent unnecessary re-renders
-  const navItemsLeft = useMemo(() => [
-    { id: 'home', label: 'Home', path: '/', icon: PAGE_ICONS.GLOBE_ICON },
-    { id: 'portfolio', label: 'My Portfolio', path: '/portfolio', icon: PAGE_ICONS.FOLDER_ICON },
-    { id: 'stocks', label: 'Browse Stocks', path: '/stocks', icon: PAGE_ICONS.PAPER_ICON },
-  ], []);
+ const navItemsLeft = useMemo(() => [
+  { id: 'home', label: 'Home', path: '/', icon: PAGE_ICONS.GLOBE_ICON },
+  { id: 'stocks', label: 'Browse Stocks', path: '/stocks', icon: PAGE_ICONS.PAPER_ICON },
+  ...(isAuthenticated
+    ? [{ id: 'portfolio', label: 'My Portfolio', path: '/portfolio', icon: PAGE_ICONS.FOLDER_ICON }]
+    : []
+  )
+], [isAuthenticated]);
 
   const navItemsRight = useMemo(() => [
-    { id: 'profile', label: 'My Profile', path: '/my_profile', icon: PAGE_ICONS.PROFILE_ICON },
-    isAuthenticated
-      ? { id: 'logout', label: 'Logout', path: '#', icon: PAGE_ICONS.LOGOUT_ICON, action: logout }
-      : { id: 'login', label: 'Login', path: '/login', icon: PAGE_ICONS.LOGIN_ICON }
-  ], [isAuthenticated, logout]);
+  ...(isAuthenticated
+    ? [
+        { id: 'profile', label: 'My Profile', path: '/my_profile', icon: PAGE_ICONS.PROFILE_ICON },
+        { id: 'logout', label: 'Logout', path: '#', icon: PAGE_ICONS.LOGOUT_ICON, action: logout }
+      ]
+    : [
+        { id: 'login', label: 'Login', path: '/login', icon: PAGE_ICONS.LOGIN_ICON }
+      ]
+  )
+], [isAuthenticated, logout]);
 
   // Check if a route is active
   const isActiveRoute = (path) => {
