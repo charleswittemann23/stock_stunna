@@ -11,8 +11,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 # Debug mode
-DEBUG = config('DEBUG', default=False, cast=bool)
-
+#DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG= True
 # Allowed Hosts
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost', cast=Csv())
 print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
