@@ -1,4 +1,3 @@
-import logging
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -47,32 +46,25 @@ class ProtectedView(APIView):
         serializer = UserSerializer(request.user)
         return Response({"user": serializer.data})
 
-logger = logging.getLogger(__name__)
+
 
 class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
         refresh_token = request.COOKIES.get("refresh_token")
-
+        
         if refresh_token:
             try:
                 token = RefreshToken(refresh_token)
                 token.blacklist()
-            except TokenError as e:
-                # Ignore if already blacklisted
-                if "blacklisted" in str(e).lower():
-                    logger.info("Refresh token was already blacklisted — ignoring.")
-                else:
-                    logger.error(f"Logout token error: {e}")
-            except AttributeError:
-                logger.warning("Token blacklist not enabled in settings.")
-            except Exception as e:
-                logger.error(f"Unexpected logout error: {e}")
+            except TokenError:
+                # Token already blacklisted or invalid — ignore
+                pass
 
-        # Clear cookies whether token was valid or not
-        cookie_settings = dict(samesite="None", secure=True)
+        # Delete cookies (no need to pass samesite/secure unless you set them explicitly on creation)
         response = Response(status=status.HTTP_205_RESET_CONTENT)
-        response.delete_cookie("access_token", **cookie_settings)
-        response.delete_cookie("refresh_token", **cookie_settings)
+        response.delete_cookie("access_token")
+        response.delete_cookie("refresh_token")
         return response
+       
