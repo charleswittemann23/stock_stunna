@@ -1,11 +1,14 @@
 import { useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
-export default function PrivateRoute({ children }) {
-    const { isAuthenticated, loading } = useContext(AuthContext);
+export default function PrivateRoute() {
+  const { isAuthenticated, loading } = useContext(AuthContext);
 
-    if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>;
 
-    return isAuthenticated ? children : <Navigate to="/login" />;
+  // If `children` is passed, render it (old style)
+  // If not, render <Outlet /> (for nested private routes)
+  return isAuthenticated
+    ?  <Outlet /> : <Navigate to="/login" replace />;
 }

@@ -23,7 +23,7 @@ export default function Navbar() {
   const navItemsRight = useMemo(() => [
   ...(isAuthenticated
     ? [
-        { id: 'profile', label: 'My Profile', path: '/my_profile', icon: PAGE_ICONS.PROFILE_ICON },
+        { id: 'profile', label: 'My Profile', path: '/myprofile', icon: PAGE_ICONS.PROFILE_ICON },
         { id: 'logout', label: 'Logout', path: '#', icon: PAGE_ICONS.LOGOUT_ICON, action: logout }
       ]
     : [
