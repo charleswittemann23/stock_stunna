@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound"
 import ProfilePage from "./pages/ProfilePage"
 import StockPage from "./pages/StockPage"
 import RegisterPage from "./pages/RegisterPage";
+import axiosInstance from "./axios";
 
 const router = createBrowserRouter([
   {
@@ -15,7 +16,23 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <NotFound />,
     children: [
-      { index: true, element: <HomePage /> },
+      {
+        index: true, 
+        element: <HomePage />, 
+        loader: async () => {
+            try {
+            const response = await axiosInstance.get('api/portfolio/homepage/');
+            console.log('Loader response:', response.data); // Debug log
+            return response.data;
+            } catch (error) {
+            console.error('Loader error:', error); // Debug log
+            throw new Response("Failed to load content", { 
+                status: error.response?.status || 500 
+            });
+            }
+        }
+      }, 
+
       { path: "login", element: <LoginPage /> },
       {path: "register", element: <RegisterPage />},
       { path: "stocks", element: <StockPage />},

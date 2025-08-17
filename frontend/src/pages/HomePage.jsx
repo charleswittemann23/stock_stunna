@@ -1,12 +1,13 @@
 import { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import './HomePage.css'
 
 export default function HomePage(){
   const { login, isAuthenticated, user, refreshAuth } = useContext(AuthContext);
   isAuthenticated ? console.log(user) : console.log("No user is logged in")
-    const navigate = useNavigate();
+    const chartsData = useLoaderData()
+    console.log(chartsData)
     return (
     <div className="retro-content">
       
