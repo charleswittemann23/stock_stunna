@@ -2,12 +2,21 @@ import { useContext, useState, useEffect } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import './HomePage.css'
+import Carousel from '../components/Carousel'
 
 export default function HomePage(){
   const { login, isAuthenticated, user, refreshAuth } = useContext(AuthContext);
   isAuthenticated ? console.log(user) : console.log("No user is logged in")
     const chartsData = useLoaderData()
-    console.log(chartsData)
+    //chartsData will have packaged data from all three yf sources. Will need to unpackage
+    let leftInfo = []
+    for( const key in chartsData){
+        let element = chartsData[key]
+        element["id"]=key
+        leftInfo.push(element)
+
+    }
+      
     return (
     <div className="retro-content">
       
@@ -21,7 +30,10 @@ export default function HomePage(){
           
         
         <div className="pixel-grid">
-          <div className="pixel-box color-a2c2dd">Series of data points, percentages from US market, Europe</div>
+          <div className="pixel-box color-a2c2dd graph">
+               <Carousel chartsData={leftInfo}/> 
+
+          </div>
           <div className="pixel-box color-d8a7b1">Chart 2</div>
           <div className="pixel-box color-bfd8bd">Chart 3</div>
         </div>
