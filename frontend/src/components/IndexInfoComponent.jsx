@@ -120,55 +120,6 @@ const IndexInfoComponent = ({ indexData }) => {
           </div>
         </div>
       </div>
-
-      {/* Trading Status */}
-      <div className="p-3 bg-light rounded">
-        <h4 className="h6 fw-semibold text-dark mb-3">Trading Status</h4>
-        <div className="row g-2">
-          <div className="col-6 col-md-3">
-            <div className="text-center p-2 bg-white rounded border">
-              <div className="text-muted small">Tradeable</div>
-              <span className={`badge mt-1 ${
-                indexData.tradeable ? 'bg-success' : 'bg-danger'
-              }`}>
-                {indexData.tradeable ? 'Yes' : 'No'}
-              </span>
-            </div>
-          </div>
-          <div className="col-6 col-md-3">
-            <div className="text-center p-2 bg-white rounded border">
-              <div className="text-muted small">Crypto Tradeable</div>
-              <span className={`badge mt-1 ${
-                indexData.cryptoTradeable ? 'bg-success' : 'bg-danger'
-              }`}>
-                {indexData.cryptoTradeable ? 'Yes' : 'No'}
-              </span>
-            </div>
-          </div>
-          <div className="col-6 col-md-3">
-            <div className="text-center p-2 bg-white rounded border">
-              <div className="text-muted small">Pre/Post Market</div>
-              <span className={`badge mt-1 ${
-                indexData.hasPrePostMarketData ? 'bg-success' : 'bg-danger'
-              }`}>
-                {indexData.hasPrePostMarketData ? 'Yes' : 'No'}
-              </span>
-            </div>
-          </div>
-          <div className="col-6 col-md-3">
-            <div className="text-center p-2 bg-white rounded border">
-              <div className="text-muted small">Alert Confidence</div>
-              <span className={`badge mt-1 ${
-                indexData.customPriceAlertConfidence === 'HIGH' ? 'bg-success' :
-                indexData.customPriceAlertConfidence === 'MEDIUM' ? 'bg-warning' :
-                'bg-danger'
-              }`}>
-                {indexData.customPriceAlertConfidence}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

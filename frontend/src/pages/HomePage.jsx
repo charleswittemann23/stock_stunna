@@ -31,6 +31,7 @@ export default function HomePage(){
         
         <div className="pixel-grid">
           <div className="pixel-box color-a2c2dd graph">
+                <h3><strong>Market Summary</strong></h3>
                <Carousel chartsData={leftInfo}/> 
 
           </div>

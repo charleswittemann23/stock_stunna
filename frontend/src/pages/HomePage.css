@@ -16,7 +16,16 @@
   color: #2C3E50;
   transition: background-color 0.3s ease;
 }
+.pixel-box.graph {
+  text-align: left; /* or initial */
+  display: flex;
+  flex-direction: column;
+}
 
+.pixel-box.graph h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
 .pixel-box:hover {
   background-color: #D3D3D3;
   cursor: pointer;
