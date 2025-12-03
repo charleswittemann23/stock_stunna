@@ -1,6 +1,3 @@
-## [Front End](https://stock-stunna.vercel.app)
-
-## [Back End](https://stock-stunna-4cfe4c578d34.herokuapp.com/)
 
 #### Minimum Viable Product user stories
 - user should have the ability to make a stock portfolio, 
